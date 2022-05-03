@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="empresataxisModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="conductores">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+    <Property Name="Telefono" Type="nvarchar" MaxLength="15" />
+    <Property Name="placa_id" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="propietarios">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+    <Property Name="Apellidos" Type="nvarchar" MaxLength="50" />
+    <Property Name="Telefono" Type="nvarchar" MaxLength="15" />
+  </EntityType>
+  <EntityType Name="taxis">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Modelo" Type="nvarchar" MaxLength="50" />
+    <Property Name="Marca" Type="nvarchar" MaxLength="50" />
+    <Property Name="Telefono" Type="nvarchar" MaxLength="15" />
+    <Property Name="propietarios_id" Type="bigint" Nullable="false" />
+  </EntityType>
+  <Association Name="conductores_placa_id_foreign">
+    <End Role="taxis" Type="Self.taxis" Multiplicity="1" />
+    <End Role="conductores" Type="Self.conductores" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="taxis">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="conductores">
+        <PropertyRef Name="placa_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="taxis_propietarios_id_foreign">
+    <End Role="propietarios" Type="Self.propietarios" Multiplicity="1" />
+    <End Role="taxis" Type="Self.taxis" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="propietarios">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="taxis">
+        <PropertyRef Name="propietarios_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="empresataxisModelStoreContainer">
+    <EntitySet Name="conductores" EntityType="Self.conductores" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="propietarios" EntityType="Self.propietarios" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="taxis" EntityType="Self.taxis" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="conductores_placa_id_foreign" Association="Self.conductores_placa_id_foreign">
+      <End Role="taxis" EntitySet="taxis" />
+      <End Role="conductores" EntitySet="conductores" />
+    </AssociationSet>
+    <AssociationSet Name="taxis_propietarios_id_foreign" Association="Self.taxis_propietarios_id_foreign">
+      <End Role="propietarios" EntitySet="propietarios" />
+      <End Role="taxis" EntitySet="taxis" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

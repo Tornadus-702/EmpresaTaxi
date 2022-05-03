@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="empresataxisModelStoreContainer" CdmEntityContainer="empresataxisEntities">
+    <EntitySetMapping Name="conductores">
+      <EntityTypeMapping TypeName="empresataxisModel.conductores">
+        <MappingFragment StoreEntitySet="conductores">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+          <ScalarProperty Name="placa_id" ColumnName="placa_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="propietarios">
+      <EntityTypeMapping TypeName="empresataxisModel.propietarios">
+        <MappingFragment StoreEntitySet="propietarios">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+          <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="taxis">
+      <EntityTypeMapping TypeName="empresataxisModel.taxis">
+        <MappingFragment StoreEntitySet="taxis">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Modelo" ColumnName="Modelo" />
+          <ScalarProperty Name="Marca" ColumnName="Marca" />
+          <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+          <ScalarProperty Name="propietarios_id" ColumnName="propietarios_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

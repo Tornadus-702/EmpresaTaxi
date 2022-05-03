@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="empresataxisModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="conductores">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Telefono" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="placa_id" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="taxis" Relationship="Self.conductores_placa_id_foreign" FromRole="conductores" ToRole="taxis" />
+  </EntityType>
+  <EntityType Name="propietarios">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Telefono" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="taxis" Relationship="Self.taxis_propietarios_id_foreign" FromRole="propietarios" ToRole="taxis" />
+  </EntityType>
+  <EntityType Name="taxis">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Modelo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Marca" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Telefono" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="propietarios_id" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="conductores" Relationship="Self.conductores_placa_id_foreign" FromRole="taxis" ToRole="conductores" />
+    <NavigationProperty Name="propietarios" Relationship="Self.taxis_propietarios_id_foreign" FromRole="taxis" ToRole="propietarios" />
+  </EntityType>
+  <Association Name="conductores_placa_id_foreign">
+    <End Role="taxis" Type="Self.taxis" Multiplicity="1" />
+    <End Role="conductores" Type="Self.conductores" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="taxis">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="conductores">
+        <PropertyRef Name="placa_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="taxis_propietarios_id_foreign">
+    <End Role="propietarios" Type="Self.propietarios" Multiplicity="1" />
+    <End Role="taxis" Type="Self.taxis" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="propietarios">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="taxis">
+        <PropertyRef Name="propietarios_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="empresataxisEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="conductores" EntityType="Self.conductores" />
+    <EntitySet Name="propietarios" EntityType="Self.propietarios" />
+    <EntitySet Name="taxis" EntityType="Self.taxis" />
+    <AssociationSet Name="conductores_placa_id_foreign" Association="Self.conductores_placa_id_foreign">
+      <End Role="taxis" EntitySet="taxis" />
+      <End Role="conductores" EntitySet="conductores" />
+    </AssociationSet>
+    <AssociationSet Name="taxis_propietarios_id_foreign" Association="Self.taxis_propietarios_id_foreign">
+      <End Role="propietarios" EntitySet="propietarios" />
+      <End Role="taxis" EntitySet="taxis" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
